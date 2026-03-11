@@ -110,23 +110,50 @@ function initBotConversation() {
 
                 
                 if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
-    store.dispatch({
-        type: 'DIRECT_LINE/POST_ACTIVITY',
-        meta: { method: 'keyboard' },
-        payload: {
-            activity: {
-                type: "event",
-                name: "InitConversation",
-                from: { id: user.id, name: user.name },
-                locale: user.locale,
-                value: {
-                    jsonWebToken: jsonWebToken
+
+    setTimeout(() => {
+
+        store.dispatch({
+            type: 'DIRECT_LINE/POST_ACTIVITY',
+            meta: { method: 'keyboard' },
+            payload: {
+                activity: {
+                    type: "event",
+                    name: "InitConversation",
+                    from: { id: user.id, name: user.name },
+                    locale: user.locale,
+                    value: {
+                        jsonWebToken: jsonWebToken
+                    }
                 }
             }
-        }
-    });
+        });
+
+    }, 800); // delay helps the bot initialize
 }
+if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+
+    setTimeout(() => {
+
+        store.dispatch({
+            type: 'DIRECT_LINE/POST_ACTIVITY',
+            meta: { method: 'keyboard' },
+            payload: {
+                activity: {
+                    type: "event",
+                    name: "InitConversation",
+                    from: { id: user.id, name: user.name },
+                    locale: user.locale,
+                    value: {
+                        jsonWebToken: jsonWebToken
+                    }
                 }
+            }
+        });
+
+    }, 800); // delay helps the bot initialize
+}
+   
 
                 else if (
                     action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
