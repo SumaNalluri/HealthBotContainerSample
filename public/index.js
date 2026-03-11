@@ -108,9 +108,24 @@ function initBotConversation() {
         return function(next) {
             return function(action) {
 
-                // removed InitConversation invoke to prevent startup error
+                
                 if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
-                    console.log("Bot connected successfully");
+    store.dispatch({
+        type: 'DIRECT_LINE/POST_ACTIVITY',
+        meta: { method: 'keyboard' },
+        payload: {
+            activity: {
+                type: "event",
+                name: "InitConversation",
+                from: { id: user.id, name: user.name },
+                locale: user.locale,
+                value: {
+                    jsonWebToken: jsonWebToken
+                }
+            }
+        }
+    });
+}
                 }
 
                 else if (
