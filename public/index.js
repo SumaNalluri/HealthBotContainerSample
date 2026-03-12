@@ -49,12 +49,10 @@ function chatRequested() {
 function getUserLocation(callback) {
     navigator.geolocation.getCurrentPosition(
         function(position) {
-
             var location = {
                 lat: position.coords.latitude,
                 long: position.coords.longitude
             };
-
             callback(location);
         },
         function(error) {
@@ -108,52 +106,28 @@ function initBotConversation() {
         return function(next) {
             return function(action) {
 
-                
                 if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
 
-    setTimeout(() => {
+                    setTimeout(() => {
 
-        store.dispatch({
-            type: 'DIRECT_LINE/POST_ACTIVITY',
-            meta: { method: 'keyboard' },
-            payload: {
-                activity: {
-                    type: "event",
-                    name: "InitConversation",
-                    from: { id: user.id, name: user.name },
-                    locale: user.locale,
-                    value: {
-                        jsonWebToken: jsonWebToken
-                    }
+                        store.dispatch({
+                            type: 'DIRECT_LINE/POST_ACTIVITY',
+                            meta: { method: 'keyboard' },
+                            payload: {
+                                activity: {
+                                    type: "event",
+                                    name: "InitConversation",
+                                    from: { id: user.id, name: user.name },
+                                    locale: user.locale,
+                                    value: {
+                                        jsonWebToken: jsonWebToken
+                                    }
+                                }
+                            }
+                        });
+
+                    }, 1000); // Delay fixes startup error
                 }
-            }
-        });
-
-    }, 800); // delay helps the bot initialize
-}
-if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
-
-    setTimeout(() => {
-
-        store.dispatch({
-            type: 'DIRECT_LINE/POST_ACTIVITY',
-            meta: { method: 'keyboard' },
-            payload: {
-                activity: {
-                    type: "event",
-                    name: "InitConversation",
-                    from: { id: user.id, name: user.name },
-                    locale: user.locale,
-                    value: {
-                        jsonWebToken: jsonWebToken
-                    }
-                }
-            }
-        });
-
-    }, 800); // delay helps the bot initialize
-}
-   
 
                 else if (
                     action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
@@ -189,11 +163,6 @@ if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
 }
 
 function startChat(user, webchatOptions) {
-
     const botContainer = document.getElementById('webchat');
-
-    window.WebChat.renderWebChat(
-        webchatOptions,
-        botContainer
-    );
+    window.WebChat.renderWebChat(webchatOptions, botContainer);
 }
